@@ -8,8 +8,8 @@ class ComposerStaticInitec8c6a1677d54f8c04c37dba3e9025f3
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
@@ -24,6 +24,7 @@ class ComposerStaticInitec8c6a1677d54f8c04c37dba3e9025f3
     public static $prefixLengthsPsr4 = array (
         'y' => 
         array (
+            'yiister\\gentelella\\' => 19,
             'yii\\swiftmailer\\' => 16,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
@@ -31,6 +32,10 @@ class ComposerStaticInitec8c6a1677d54f8c04c37dba3e9025f3
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
+        ),
+        'r' => 
+        array (
+            'rmrevin\\yii\\fontawesome\\' => 24,
         ),
         'p' => 
         array (
@@ -95,6 +100,10 @@ class ComposerStaticInitec8c6a1677d54f8c04c37dba3e9025f3
     );
 
     public static $prefixDirsPsr4 = array (
+        'yiister\\gentelella\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiister/yii2-gentelella',
+        ),
         'yii\\swiftmailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer/src',
@@ -122,6 +131,10 @@ class ComposerStaticInitec8c6a1677d54f8c04c37dba3e9025f3
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'rmrevin\\yii\\fontawesome\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
