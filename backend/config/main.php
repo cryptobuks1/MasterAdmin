@@ -11,11 +11,22 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'scbuae' => [
+            'class' => 'backend\modules\scbuae\Module',
+        ],
+        'amex' => [
+            'class' => 'backend\modules\amex\Module',
+        ],
+        'enbd' => [
+            'class' => 'backend\modules\enbd\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+        
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
