@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'OperatingSystem',
             //'Browser',
             //'IP',
-            //'IsActive',
+            'IsActive',
             //'LastUpdated',
             //'CreatedOn',
 

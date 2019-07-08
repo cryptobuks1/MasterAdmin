@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'Status',
             'TextToDisplay',
             'isActive',
-            'LastUpdated',
+            //'LastUpdated',
             //'CreatedOn',
 
             ['class' => 'yii\grid\ActionColumn'],

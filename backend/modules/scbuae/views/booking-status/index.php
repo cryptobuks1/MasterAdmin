@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'BookingStatusId',
             'Value',
             'IsActive',
-            'LastUpdated',
-            'CreatedOn',
+            //'LastUpdated',
+            //'CreatedOn',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

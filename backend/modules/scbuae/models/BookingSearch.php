@@ -40,7 +40,10 @@ class BookingSearch extends Booking
      */
     public function search($params)
     {
-        $query = Booking::find();
+        $query = Booking::find()->orderBy([
+            'IsActive' => SORT_ASC,
+            //'item_no'=>SORT_ASC
+          ]);
 
         // add conditions that should always apply here
 

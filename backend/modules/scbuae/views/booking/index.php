@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'GolferId',
             'GolfCourseId',
             'TeeTimeId:datetime',
-            //'ConfirmTeeTime',
+            'ConfirmTeeTime',
             //'DateOfPlay',
             //'DateOfRequest',
             //'NoOfGuest',
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'BookingStatusId',
             //'OutOfTATStatus',
             //'Comment',
-            //'IsActive',
+            'IsActive',
             //'LastUpdated',
             //'CreatedOn',
 

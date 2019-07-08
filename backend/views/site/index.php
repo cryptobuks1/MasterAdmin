@@ -22,19 +22,7 @@ $this->title = 'My Yii Application';
             <div class="col-lg-12">
                 <h2>SCBUAE URLS</h2>
 
-                # MasterAdmin
-
-                <li>scbuae/booking-status</li>
-                 <li>scbuae/account-type</li>
-                 <li>scbuae/booking</li>
-                 <li>scbuae/booking-status</li>
-                 <li>scbuae/customer-care-executive</li>
-                 <li>scbuae/customer-care-executive-activity-log</li>
-                 <li>scbuae/golf-course</li>
-                 <li>scbuae/golfer</li>
-                 <li>scbuae/guest-payment</li>
-                 <li>scbuae/guest-payment-status</li>
-                 <li>scbuae/tee-time</li>
+               
 
                 <p></p>
             </div>

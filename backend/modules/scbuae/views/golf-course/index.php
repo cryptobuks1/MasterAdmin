@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'Name',
             'Gid',
             'IsActive',
-            'LastUpdated',
+            //'LastUpdated',
             //'CreatedOn',
 
             ['class' => 'yii\grid\ActionColumn'],
