@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * GolfcourseMaxBookController implements the CRUD actions for GolfcourseMaxBook model.
  */
-class GolfcourseMaxBookController extends Controller
+class GolfcourseMaxBookController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all GolfcourseMaxBook models.

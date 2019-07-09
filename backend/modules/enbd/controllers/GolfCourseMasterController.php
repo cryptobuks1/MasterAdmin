@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * GolfCourseMasterController implements the CRUD actions for GolfCourseMaster model.
  */
-class GolfCourseMasterController extends Controller
+class GolfCourseMasterController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all GolfCourseMaster models.

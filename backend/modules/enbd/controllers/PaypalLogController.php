@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * PaypalLogController implements the CRUD actions for PaypalLog model.
  */
-class PaypalLogController extends Controller
+class PaypalLogController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all PaypalLog models.

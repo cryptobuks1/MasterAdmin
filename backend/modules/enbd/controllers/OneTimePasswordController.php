@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * OneTimePasswordController implements the CRUD actions for OneTimePassword model.
  */
-class OneTimePasswordController extends Controller
+class OneTimePasswordController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all OneTimePassword models.

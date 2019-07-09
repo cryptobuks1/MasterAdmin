@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * FourBallMasterController implements the CRUD actions for FourBallMaster model.
  */
-class FourBallMasterController extends Controller
+class FourBallMasterController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all FourBallMaster models.

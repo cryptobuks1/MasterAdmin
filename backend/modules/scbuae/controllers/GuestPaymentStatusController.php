@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * GuestPaymentStatusController implements the CRUD actions for GuestPaymentStatus model.
  */
-class GuestPaymentStatusController extends Controller
+class GuestPaymentStatusController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all GuestPaymentStatus models.

@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * CustomerCareExecutiveActivityLogController implements the CRUD actions for CustomerCareExecutiveActivityLog model.
  */
-class CustomerCareExecutiveActivityLogController extends Controller
+class CustomerCareExecutiveActivityLogController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all CustomerCareExecutiveActivityLog models.

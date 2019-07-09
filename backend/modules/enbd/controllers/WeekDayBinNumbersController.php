@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * WeekDayBinNumbersController implements the CRUD actions for WeekDayBinNumbers model.
  */
-class WeekDayBinNumbersController extends Controller
+class WeekDayBinNumbersController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all WeekDayBinNumbers models.

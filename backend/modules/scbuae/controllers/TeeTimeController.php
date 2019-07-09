@@ -13,36 +13,36 @@ use yii\filters\AccessControl;
 /**
  * TeeTimeController implements the CRUD actions for TeeTime model.
  */
-class TeeTimeController extends Controller
+class TeeTimeController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    // [
-                    //     'actions' => ['login', 'error','signup'],
-                    //     'allow' => true,
-                    // ],
-                    [
-                        'actions' => ['view', 'index','create','update'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'access' => [
+    //             'class' => AccessControl::className(),
+    //             'rules' => [
+    //                 // [
+    //                 //     'actions' => ['login', 'error','signup'],
+    //                 //     'allow' => true,
+    //                 // ],
+    //                 [
+    //                     'actions' => ['view', 'index','create','update'],
+    //                     'allow' => true,
+    //                     'roles' => ['@'],
+    //                 ],
+    //             ],
+    //         ],
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all TeeTime models.

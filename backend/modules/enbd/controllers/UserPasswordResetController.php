@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * UserPasswordResetController implements the CRUD actions for UserPasswordReset model.
  */
-class UserPasswordResetController extends Controller
+class UserPasswordResetController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all UserPasswordReset models.

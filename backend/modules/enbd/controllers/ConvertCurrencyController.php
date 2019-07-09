@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * ConvertCurrencyController implements the CRUD actions for ConvertCurrency model.
  */
-class ConvertCurrencyController extends Controller
+class ConvertCurrencyController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all ConvertCurrency models.

@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * CompGolfCourseBookController implements the CRUD actions for CompGolfCourseBook model.
  */
-class CompGolfCourseBookController extends Controller
+class CompGolfCourseBookController extends DefaultController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'delete' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * Lists all CompGolfCourseBook models.
