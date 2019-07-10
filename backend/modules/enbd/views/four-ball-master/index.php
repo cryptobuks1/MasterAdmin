@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'fourBallName',
             'fourBallEmail:email',
             'fourBallPhoneNum',
-            //'bookedByUserID',
-            //'cdate',
+            'bookedByUserID',
+            'cdate',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

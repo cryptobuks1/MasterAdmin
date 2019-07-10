@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\enbd\models\WebUserMasterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Web User Masters';
+$this->title = 'Customers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="web-user-master-index">
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Web User Master', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Customer', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -28,11 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'User_ID',
-            'Login_Name',
+            //'Login_Name',
             'Fname',
             'Lname',
             'Email:email',
-            //'Mobile',
+            'Mobile',
             //'mobileVerified',
             //'City',
             //'ZipCode',
@@ -49,7 +50,18 @@ $this->params['breadcrumbs'][] = $this->title;
             //'Handicap',
             //'DOB',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           // ['class' => 'yii\grid\ActionColumn'],
+           [
+            'header' => 'Action',
+            'headerOptions' => [
+            'style' => 'color:#3c8dbc'],
+            'content' => function($data) {
+            //$deleteUrl = Url::to(["delete", "id" => $data->id]);
+            $viewUrl = Url::to(["view", "id" => $data->User_ID]);
+            $return =" <a role='menuitem' tabindex='-1' title='View' aria-label='View'  href='{$viewUrl}'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>";
+            return  $return;
+        }
+        ],
         ],
     ]); ?>
 

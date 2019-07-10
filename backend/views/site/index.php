@@ -7,11 +7,11 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>Welcome!</h1>
 
-        <p class="lead">Golflan powered Master application.</p>
-    <p>add new user for access login </p>
-        <p><a class="btn btn-lg btn-success" href="#"> # MasterAdmin</a></p>
+        <p class="lead">Please use left side options.</p>
+    <p>To Perform Required Operation </p>
+        <!-- <p><a class="btn btn-lg btn-success" href="#"> # MasterAdmin</a></p> -->
     </div>
 
     <div class="body-content">
@@ -20,7 +20,7 @@ $this->title = 'My Yii Application';
             
           
             <div class="col-lg-12">
-                <h2>SCBUAE URLS</h2>
+              
 
                
 

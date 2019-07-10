@@ -69,8 +69,8 @@ class WebUserMaster extends \yii\db\ActiveRecord
         return [
             'User_ID' => 'User ID',
             'Login_Name' => 'Login Name',
-            'Fname' => 'Fname',
-            'Lname' => 'Lname',
+            'Fname' => 'First Name',
+            'Lname' => 'Last Name',
             'Email' => 'Email',
             'Mobile' => 'Mobile',
             'mobileVerified' => 'Mobile Verified',

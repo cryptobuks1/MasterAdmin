@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\scbuae\models\GolferSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -41,7 +42,18 @@ $this->params['breadcrumbs'][] = $this->title;
             //'LastUpdated',
             //'CreatedOn',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+            [
+                'header' => 'Action',
+                'headerOptions' => [
+                'style' => 'color:#3c8dbc'],
+                'content' => function($data) {
+                //$deleteUrl = Url::to(["delete", "id" => $data->id]);
+                $viewUrl = Url::to(["view", "id" => $data->GolferId]);
+                $return =" <a role='menuitem' tabindex='-1' title='View' aria-label='View'  href='{$viewUrl}'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>";
+                return  $return;
+            }
+            ],
         ],
     ]); ?>
 
