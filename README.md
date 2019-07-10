@@ -55,5 +55,5 @@ if (!YII_ENV_TEST) {
         'allowedIPs' => ['127.0.0.1']
     ];
 }
-
+ 
 return $config;
