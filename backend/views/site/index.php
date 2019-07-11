@@ -2,15 +2,14 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'GolfLan Administrative Application';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Welcome!</h1>
-
-        <p class="lead">Please use left side options.</p>
-    <p>To Perform Required Operation </p>
+        <p class="lead">Welcome To</p>
+        <h1>Golflan Super Admin Panel.</h1>
+        <p class="lead">Please use left side options to Perform Required Operation.</p>
         <!-- <p><a class="btn btn-lg btn-success" href="#"> # MasterAdmin</a></p> -->
     </div>
 

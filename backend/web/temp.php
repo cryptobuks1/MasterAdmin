@@ -18,10 +18,10 @@ $size=10;
         $("button").click(function(){
             var Active = [];
             var unactive = [];
-            $.each($("input[name='Active']:checked"), function(){            
+            $.each($("input[name='Active']:checked"), function(){       
                 Active.push($(this).val());
             });
-            $.each($("input[name='No']:checked"), function(){            
+            $.each($("input[name='No']:checked"), function(){
                 unactive.push($(this).val());
             });
             $('#active').html("My Active Index are: " + Active.join(", "));
@@ -41,7 +41,7 @@ $size=10;
 
     <form>
 
-        <h3>Select your favorite sports:</h3>
+        <h3>Select your favorite action:</h3>
 
         <table border=2>
         <tr>

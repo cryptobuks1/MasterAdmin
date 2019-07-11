@@ -8,16 +8,16 @@ use yii\helpers\Url;
 /* @var $searchModel backend\modules\scbuae\models\GolferSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Golfers';
+$this->title = 'SCB UAE - User Management';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="golfer-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <!-- <p>
         <?= Html::a('Create Golfer', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

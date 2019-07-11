@@ -8,16 +8,16 @@ use yii\helpers\Url;
 /* @var $searchModel backend\modules\enbd\models\WebUserMasterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Customers';
+$this->title = 'ENBD - User Management';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="web-user-master-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <!-- <p>
         <?= Html::a('Create Customer', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

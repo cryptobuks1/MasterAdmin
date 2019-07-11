@@ -9,10 +9,7 @@ isset(Yii::$app->user->identity->username)?
                                         "url" => "#",
                                         "icon" => "table",
                                         "items" => [
-                                            [
-                                                "label" => "Customers",
-                                                "url" => "/enbd/web-user-master",
-                                            ],
+                                            ["label" => "Users","url" => "/enbd/web-user-master"],
                                             // ["label" => "web-user-cards","url" => "/enbd/web-user-cards",],
                                             // ["label" => "four-ball-master","url" => "/enbd/four-ball-master",],
                                             // ["label" => "golf-course-master","url" => "/enbd/golf-course-master"],
@@ -37,11 +34,11 @@ isset(Yii::$app->user->identity->username)?
                                         "url" => "#",
                                         "icon" => "table",
                                         "items" => [
-                                            ["label" => "Golfer","url" => "/scbuae/golfer"],
+                                            ["label" => "Users","url" => "/scbuae/golfer"],
+                                            ["label" => "Activity Logs","url" => "/scbuae/customer-care-executive-activity-log"],
                                             //["label" => "booking","url" => "/scbuae/booking"],
                                             //["label" => "customer-care-executive","url" => "/scbuae/customer-care-executive"],
-                                            ["label" => "Log","url" => "/scbuae/customer-care-executive-activity-log"],
-                                           // ["label" => "golf-course","url" => "/scbuae/golf-course"],
+                                            // ["label" => "golf-course","url" => "/scbuae/golf-course"],
                                            
                                             //["label" => "guest-payment","url" => "/scbuae/guest-payment"],
                                             //["label" => "tee-time","url" => "/scbuae/tee-time"],

@@ -46,7 +46,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                 <!-- menu prile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="favicon.ico" alt="..." class="img-circle profile_img">
+                        <img src="https://img.icons8.com/color/48/000000/golf.png" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
@@ -105,7 +105,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="favicon.ico" alt=""><?= isset(Yii::$app->getUser()->identity->username)?ucwords(Yii::$app->getUser()->identity->username):"Guest" ?> 
+                                <img src="https://img.icons8.com/color/48/000000/golf.png" alt=""><?= isset(Yii::$app->getUser()->identity->username)?ucwords(Yii::$app->getUser()->identity->username):"Guest" ?> 
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
