@@ -5,6 +5,37 @@ isset(Yii::$app->user->identity->username)?
                                 "items" => [
                                     ["label" => "Dashboard", "url" => "/", "icon" => "home"],
                                     [
+                                        "label" => "Amex",
+                                        "url" => "#",
+                                        "icon" => "table",
+                                        "items" => [
+                                           // ["label" => "Users","url" => "/amex"],
+                                            ["label" => "Dashboard","url" => "/amex"],
+                                            ["label" => "New Booking","url" => "/amex/booking/create"],
+                                            ["label" => "Learn New Booking","url" => "/amex"],
+                                            ["label" => "New Customer","url" => "/amex"],
+                                            ["label" => "Booking",
+                                                "url" => "#",
+                                                "items" => [
+                                                    ["label" => "Manage Booking","url" => "/amex/booking-master",],
+                                                    ["label" => "Splite Booking","url" => "/amex",],
+                                                ],
+                                            ],
+                                            ["label" => "Manage Learn Booking","url" => "/amex"],
+                                            ["label" => "Reports",
+                                                "url" => "#",
+                                                "items" => [
+                                                    ["label" => "Play Booking Reports","url" => "/amex"],
+                                                    ["label" => "Learn Booking Reports","url" => "/amex"],
+                                                    ["label" => "Cutomer Booking Reports","url" => "/amex"],
+                                                    ["label" => "Customer Reports","url" => "/amex"],
+                                                ],
+                                            ],
+                                            ["label" => "View Golf Courses","url" => "/amex"],
+                                                                                      
+                                        ],
+                                    ],
+                                    [
                                         "label" => "ENBD",
                                         "url" => "#",
                                         "icon" => "table",
