@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\amex\models\CardType;
 use backend\modules\amex\models\BookingMaster;
+use backend\modules\amex\models\GolfCourseMaster;
+use backend\modules\amex\models\GolfCourseMasterSearch;
+
 function pre($ar,$l=null){
     echo "<pre>".$l;
     print_r($ar);
@@ -67,14 +70,20 @@ class CardHolderController extends Controller
     {
         $detail=$this->findModelbymobile($id);
         pre($detail);
-
         if(sizeof($detail)>1){
             echo "multiple card";
         }
-        // return $this->render('view', [
-        //     'model' => $this->findModel($id),
-        // ]);
     }
+
+    public function actionGolf($id=null)
+    {
+        $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
+        $model['days']=CardHolder::getDatesArr(10);
+       
+        pre($model);
+    }
+
+    
 
     /**
      * Creates a new CardHolder model.
@@ -160,6 +169,8 @@ class CardHolderController extends Controller
         }
         throw new NotFoundHttpException('The requested does not exist.');
     }
+
+
 
     protected function findModel($id)
     {

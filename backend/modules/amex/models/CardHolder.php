@@ -32,6 +32,12 @@ class CardHolder extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public $CardTypeName;
+    public const SERVER_FORMAT='Y-m-d';
+    public const DISPLAY_FORMAT='M d, Y';
+    
+    public static function isWeekend($dateOfPlay){ 
+        return $isWeekend = date('N', strtotime($dateOfPlay)) >= 6;
+    }
     public static function tableName()
     {
         return 'CardHolder';
@@ -83,6 +89,26 @@ class CardHolder extends \yii\db\ActiveRecord
             'LastUpdated' => 'Last Updated',
             'CreatedBy' => 'Created By',
         ];
+    }
+
+
+    /**
+     * @Utility
+     */
+    public static function getDatesArr($days) {
+        $datesArr = array();
+
+        $begin = new \DateTime('now');
+        $end = (new \DateTime('now'))->add(new \DateInterval('P'.$days.'D'));
+
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($begin, $interval, $end);
+
+        foreach ($period as $dt) {
+            $datesArr[] = $dt->format(CardHolder::SERVER_FORMAT);
+        }
+
+        return $datesArr;
     }
 
     /**
