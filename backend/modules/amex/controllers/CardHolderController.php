@@ -77,16 +77,6 @@ class CardHolderController extends Controller
 
     public function actionGolf($id=null)
     {
-<<<<<<< HEAD
-        //$id=12;
-        $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
-        $model['days']=CardHolder::getDatesArr(10);
-        foreach($model['days'] as $day){
-            $model[$day]['total']='';
-            $model[$day]['booked']='';
-            $model[$day]['avaliable']='';
-        }
-=======
 
         
        // $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
@@ -117,7 +107,6 @@ class CardHolderController extends Controller
                 ];
             }
         unset($model['days']);
->>>>>>> c614ad7c36dbc716434184b61866ebd5313ace58
         pre($model);
     }
 
@@ -143,7 +132,7 @@ class CardHolderController extends Controller
             $data['AMEXConciergeWeekendRounds']=($data['AMEXConciergeWeekendRounds']==-1)?999:$data['AMEXConciergeWeekendRounds'];
             $data['ISOSWeekdayRounds']=($data['ISOSWeekdayRounds']==-1)?999:$data['ISOSWeekdayRounds'];
             $data['ISOSWeekendRounds']=($data['ISOSWeekendRounds']==-1)?999:$data['ISOSWeekendRounds'];
-            //pre($data,120);exit;
+            //pre($data,120);exit; 
             $data['date']=$date;
             $sql=BookingMaster::find()
                 ->joinwith('customer')->select('sum(numOfGolfers) totalbooked')
