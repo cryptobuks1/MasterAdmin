@@ -47,6 +47,7 @@ class BookingMaster extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public const ACTIVE=[1,2,3,5,6];
     public static function tableName()
     {
         return 'bookingMaster';
