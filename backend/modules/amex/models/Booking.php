@@ -12,6 +12,8 @@ class Booking extends \yii\db\ActiveRecord
     public $birth_date;
     public $Name;
     const SCENARIO_MULTICARD = 'create';
+
+    public const ACTIVE=[1,2,3,5,6];
     public static function tableName()
     {
         return 'bookingMaster';

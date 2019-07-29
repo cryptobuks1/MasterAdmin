@@ -66,9 +66,9 @@ class CardHolderController extends Controller
         ]);
     }
 
-    public function actionCard($id)
+    public function actionCard($id,$cardtype)
     {
-        $detail=$this->findModelbymobile($id);
+        $detail=$this->findModelbymobile($id,$cardtype);
         pre($detail);
         if(sizeof($detail)>1){
             echo "multiple card";
@@ -77,12 +77,89 @@ class CardHolderController extends Controller
 
     public function actionGolf($id=null)
     {
-        $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
-        $model['days']=CardHolder::getDatesArr(10);
-       
+
+        
+       // $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
+        $model['days']=CardHolder::getDatesArr(15);
+        $model['GC']=(int)$id;
+        $model['GOlferName']=(int)$id;
+            foreach($model['days'] as $dt){
+            $isWeekend=(date('N', strtotime($dt)) >= 6) ? true:false;
+            $GolfDetail=$this->GetRounds((int)$id,$dt,1); //1= AMEX else=ISOS
+            //$IsosGolfDetail=$this->GetRounds((int)$id,$dt,1);
+                $model['booking'][$dt]=[
+                    'PlatinamBooking'=>$GolfDetail['PlatinamBooking'],
+                    'Centurion'=>$GolfDetail['CenturionBooking'],
+                    'Charge'=>$GolfDetail['ChargeBooking'],
+                    'Amex'=>[
+                        'weekend'=>($isWeekend)?'YES':'NO',
+                        'limit'=>(!$isWeekend)?$GolfDetail['AMEXConciergeWeekdayRounds']:$GolfDetail['AMEXConciergeWeekendRounds'],
+                        'PlayBooked'=>isset($GolfDetail['AmexTotalBooked'])?$GolfDetail['AmexTotalBooked']:0,
+                        'learnBooked'=>'',
+                ],
+                    'Isos'=>[
+                        'weekend'=>($isWeekend)?'YES':'NO',
+                        'limit'=>(!$isWeekend)?$GolfDetail['ISOSWeekdayRounds']:$GolfDetail['ISOSWeekendRounds'],
+                        'PlayBooked'=>isset($GolfDetail['IsosTotalBooked'])?$GolfDetail['IsosTotalBooked']:0,
+                        'learnBooked'=>''
+
+                    ]
+                ];
+            }
+        unset($model['days']);
         pre($model);
     }
 
+    private function GetRounds($GID,$date,$accountType,$playType=1){
+        //$date='2019-07-28';
+        $accountTypeName=($accountType==1)?'AMEXConciergeActive':'ISOSActive';
+        $Cards=($accountType==1)?[2,3]:[1];
+        
+         $AmexCards=[2,3];
+         $isosCards=[1];
+
+        $data=GolfCourseMaster::find()
+            ->where(['GID'=>$GID ,'golfCourseTypeID'=>$playType, $accountTypeName=>1])
+            ->asArray()->one();
+        if(!$data){ //NO CAPPING
+            $data['AMEXConciergeWeekdayRounds']=999;
+            $data['AMEXConciergeWeekendRounds']=999;
+            $data['ISOSWeekdayRounds']=999;
+            $data['ISOSWeekendRounds']=999;
+        }
+        
+            $data['AMEXConciergeWeekdayRounds']=($data['AMEXConciergeWeekdayRounds']==-1)?999:$data['AMEXConciergeWeekdayRounds'];
+            $data['AMEXConciergeWeekendRounds']=($data['AMEXConciergeWeekendRounds']==-1)?999:$data['AMEXConciergeWeekendRounds'];
+            $data['ISOSWeekdayRounds']=($data['ISOSWeekdayRounds']==-1)?999:$data['ISOSWeekdayRounds'];
+            $data['ISOSWeekendRounds']=($data['ISOSWeekendRounds']==-1)?999:$data['ISOSWeekendRounds'];
+            //pre($data,120);exit;
+            $data['date']=$date;
+            $sql=BookingMaster::find()
+                ->joinwith('customer')->select('sum(numOfGolfers) totalbooked')
+              ->andFilterWhere(['dateOfPlay'=>$date])->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+              ->andFilterWhere(['in', 'CardTypeID', $AmexCards])->createCommand()->getRawSql();
+
+            $IsosSql= BookingMaster::find()
+            ->joinwith('customer')->select('sum(numOfGolfers) totalbooked')
+            ->andFilterWhere(['dateOfPlay'=>$date])->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+            ->andFilterWhere(['in', 'CardTypeID', $isosCards])->createCommand()->getRawSql();
+
+          $data['AmexTotalBooked']=Yii::$app->get('amexDB')->createCommand($sql)->queryAll()[0]['totalbooked'];
+          $data['IsosTotalBooked']=Yii::$app->get('amexDB')->createCommand($IsosSql)->queryAll()[0]['totalbooked'];
+         
+          /**
+           * USE FOR DUMP PURPOSE ONLY
+           */
+          $PlatinamBooking= BookingMaster::find()->joinwith('customer')->select('sum(numOfGolfers) totalbooked')->andFilterWhere(['dateOfPlay'=>$date])->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])->andFilterWhere(['in', 'CardTypeID', [1]])->createCommand()->getRawSql();
+          $CenturionBooking= BookingMaster::find()->joinwith('customer')->select('sum(numOfGolfers) totalbooked')->andFilterWhere(['dateOfPlay'=>$date])->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])->andFilterWhere(['in', 'CardTypeID', [2]])->createCommand()->getRawSql();
+          $ChargeBooking= BookingMaster::find()->joinwith('customer')->select('sum(numOfGolfers) totalbooked')->andFilterWhere(['dateOfPlay'=>$date])->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])->andFilterWhere(['in', 'CardTypeID', [3]])->createCommand()->getRawSql();
+          $data['PlatinamBooking']=Yii::$app->get('amexDB')->createCommand($PlatinamBooking)->queryAll()[0]['totalbooked'];
+          $data['CenturionBooking']=Yii::$app->get('amexDB')->createCommand($CenturionBooking)->queryAll()[0]['totalbooked'];
+          $data['ChargeBooking']=Yii::$app->get('amexDB')->createCommand($ChargeBooking)->queryAll()[0]['totalbooked'];
+        
+                // pre($data,120);exit;
+            return $data;     
+    }
     
 
     /**
@@ -150,9 +227,9 @@ class CardHolderController extends Controller
         $CardTypeID=($CardTypeID) ? $CardTypeID :$CardTypeID;
        
         if (($model = CardHolder::find()
-            ->andFilterWhere(['Mobile' => (int)$mobile,'IsActive'=>1])
+            ->andFilterWhere(['Mobile' => (int)$mobile,'IsActive'=>1,'CardTypeID'=>$CardTypeID])
             ->andFilterWhere(['in', 'CardTypeID', [1,2,3,4,5]])
-            ->asArray()->all()) !== null) {  
+            ->asArray()->all()) !== null) {
             
                 echo sizeof($model);
 
@@ -160,9 +237,42 @@ class CardHolderController extends Controller
             $model[$i]['CardTypeName']=CardType::find()->where(['CardTypeID'=>$model[$i]['CardTypeID'],'IsActive'=>1])->asArray()->one()['CardTypeName'];
             $model[$i]['LastPlayBooking']=BookingMaster::find()
                 ->andFilterWhere(['customerID'=>$model[$i]['CardHolderID'],'IsActive'=>1])
-                ->andFilterWhere(['in', 'bookingStatus', [1,2,3,5,6]])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
                 ->orderBy(['dateOfPlay' => SORT_DESC,])
                 ->asArray()->one();
+
+                $date = new \DateTime('now');
+                $todayDate=$date->format(CardHolder::SERVER_FORMAT);
+                $date->modify('last day of this month');
+                $lastDate= $date->format(CardHolder::SERVER_FORMAT);
+                $date->modify('First day of this month');
+                $FirstDate= $date->format(CardHolder::SERVER_FORMAT);
+           // pre($model);exit;
+            $model[$i]['MonthlyBookingCount']=BookingMaster::find()
+                ->select('count(numOfGolfers) totalbooked')
+                ->andFilterWhere(['customerID'=> $model[$i]['CardHolderID']])
+                ->andFilterWhere(['between','dateOfPlay',$FirstDate,$lastDate])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                ->asArray()->one();
+
+                if(( $todayDate < $model[$i]['LastPlayBooking']['dateOfPlay'])){
+                    $error='Booking Alery Done, You can book next after play';
+                }
+
+                if(CardHolder::CardLimit[CardHolder::CardTypeName[$model[$i]['CardTypeID']]]['play'] <=$model[$i]['MonthlyBookingCount']['totalbooked']){
+                    $error='Monthly Quota Limit Over';
+                }
+               
+                $model[$i]['MonthlyBookingCount']['MonthlyQuota']=CardHolder::CardLimit[CardHolder::CardTypeName[$model[$i]['CardTypeID']]]['play'];
+                $model[$i]['MonthlyBookingCount']['CanBook']=isset($error)?$error:'yes';
+                
+                $todayDate;
+
+            // $model[$i]['LastBooked']=BookingMaster::find()
+            //     ->andFilterWhere(['customerID'=>$model[$i]['CardHolderID'],'IsActive'=>1])
+            //     ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+            //     ->orderBy(['dateOfBooking' => SORT_DESC])
+            //     ->asArray()->one();
            }
            
             return $model;
