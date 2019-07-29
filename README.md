@@ -25,9 +25,9 @@ $config = [
         ],
         'amexDB' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=AmexDB',
+            'dsn' => 'mysql:host=localhost;dbname=amex',
             'username' => 'root',
-            'password' => 'welcome',
+            'password' => '',
             'charset' => 'utf8',
         ],
         'enbdDB' => [

@@ -1,5 +1,5 @@
 <?=
-isset(Yii::$app->user->identity->username)?
+//isset(Yii::$app->user->identity->username)?
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
@@ -85,5 +85,5 @@ isset(Yii::$app->user->identity->username)?
                                 ],
                             ]
                         )
-: ""
+//: ""
 ?>

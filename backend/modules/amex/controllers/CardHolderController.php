@@ -77,9 +77,14 @@ class CardHolderController extends Controller
 
     public function actionGolf($id=null)
     {
+        //$id=12;
         $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
         $model['days']=CardHolder::getDatesArr(10);
-       
+        foreach($model['days'] as $day){
+            $model[$day]['total']='';
+            $model[$day]['booked']='';
+            $model[$day]['avaliable']='';
+        }
         pre($model);
     }
 
