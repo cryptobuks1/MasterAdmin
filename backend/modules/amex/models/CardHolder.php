@@ -61,7 +61,76 @@ class CardHolder extends \yii\db\ActiveRecord
         return Yii::$app->get('amexDB');
     }
 
-    
+    public function findModelbymobile($mobile,int $CardTypeID=null)
+    {
+        //$CardTypeID=($CardTypeID) ? (int)$CardTypeID :$CardTypeID;
+       
+        if (($model = CardHolder::find()
+            ->andFilterWhere(['Mobile' => (int)$mobile,'IsActive'=>1,'CardTypeID'=>$CardTypeID])
+            ->asArray()->all()) !== null) {
+            
+           // echo sizeof($model);
+
+           for($i=0;$i<sizeof($model);$i++){
+            $model[$i]['CardTypeName']=CardType::find()->where(['CardTypeID'=>$model[$i]['CardTypeID'],'IsActive'=>1])->asArray()->one()['CardTypeName'];
+            $model[$i]['LastPlayBooking']=BookingMaster::find()
+                ->andFilterWhere(['customerID'=>$model[$i]['CardHolderID'],'IsActive'=>1])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                ->orderBy(['dateOfPlay' => SORT_DESC,])
+                ->asArray()->one();
+                
+            $model[$i]['LastSuplimantryBooking']=FourBallMaster::find()
+                ->joinwith('booking')
+                ->andFilterWhere(['fourBallFullName'=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile'],'fourBallCardType'=>$model[$i]['CardTypeID']])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                ->orderBy(['dateOfPlay' => SORT_DESC,])
+                ->asArray()->one();
+
+                $date = new \DateTime('now');
+                $todayDate=$date->format(CardHolder::SERVER_FORMAT);
+                $date->modify('last day of this month');
+                $lastDate= $date->format(CardHolder::SERVER_FORMAT);
+                $date->modify('First day of this month');
+                $FirstDate= $date->format(CardHolder::SERVER_FORMAT);
+           
+            $model[$i]['MonthlyBookingCount']=BookingMaster::find()
+                ->select('count(numOfGolfers) totalbooked')
+                ->andFilterWhere(['customerID'=> $model[$i]['CardHolderID']])
+                ->andFilterWhere(['between','dateOfPlay',$FirstDate,$lastDate])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                ->asArray()->one();
+            $model[$i]['MonthlyBookingCount']['Forball']=
+                Yii::$app->get('amexDB')->createCommand(
+                FourBallMaster::find()
+                ->select('count(fourBallMobile) totalbooked')
+                ->joinwith('booking')
+                ->andFilterWhere(['fourBallFullName'=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile'],'fourBallCardType'=>$model[$i]['CardTypeID'],'fourBallMaster.isActive'=>1])
+                ->andFilterWhere(['between','dateOfPlay',$FirstDate,$lastDate])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                //->asArray()->one();
+                ->createCommand()->getRawSql())->queryAll()[0]['totalbooked'];
+
+                if(( $todayDate < $model[$i]['LastPlayBooking']['dateOfPlay'])){
+                    $error='Booking Alery Done, You can book next after play';
+                }
+
+                if(CardHolder::CardLimit[CardHolder::CardTypeName[$model[$i]['CardTypeID']]]['play'] <=$model[$i]['MonthlyBookingCount']['totalbooked']){
+                    $error='Monthly Quota Limit Over';
+                }
+               
+                $model[$i]['MonthlyBookingCount']['MonthlyQuota']=CardHolder::CardLimit[CardHolder::CardTypeName[$model[$i]['CardTypeID']]]['play'];
+                $model[$i]['MonthlyBookingCount']['CanBook']=isset($error)?$error:'yes';
+                
+                //$todayDate;
+
+           }
+           
+            return $model;
+        } else {
+            return false;
+        }
+        
+    }
 
     /**
      * {@inheritdoc}

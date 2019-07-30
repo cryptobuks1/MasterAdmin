@@ -15,11 +15,14 @@ class Booking extends \yii\db\ActiveRecord
     public $multipleCards=false;
     public $cardValid=false;
     public $cardtype;
+    public $completeStep1=false;
 
-    const SCENARIO_MULTICARD = 'create';
-    const SCENARIO_CARDVALID = 'create';
+    public $DUMP=[];
 
-    const SCENARIO_CREATE = 'create';
+    // const SCENARIO_MULTICARD = 'create';
+    // const SCENARIO_CARDVALID = 'create';
+
+    // const SCENARIO_CREATE = 'create';
     public const ACTIVE=[1,2,3,5,6];
     public static function tableName()
     {
@@ -41,18 +44,18 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             [['customerID'],'required'],
-            [['Name'],'required', 'on' => self::SCENARIO_CARDVALID],
-            [['cardtype'], 'required', 'on' => self::SCENARIO_MULTICARD],
+            [['Name'],'required', 'on' => $this->cardValid],
+            [['cardtype'], 'required', 'on' => $this->multipleCards],
             ['Name','nameValid'],
+            ['cardtype','cardtypeValid'],
             [['Name'],'string', 'max' => 30],
-            
+            [['cardtype'],'number', 'max' => 1],
             ['customerID','cardValid'],
             ['new_password','passwordCriteria'],
         ];
     }
 
     function cardValid(){
-        //$customer= new CardHolder();
         if (($model = CardHolder::find()->where(['Mobile' => $this->customerID,'IsActive'=>1])->asArray()->all()) == null) {  
             $this->addError('customerID', 'Invalid Number');
         }else {
@@ -62,12 +65,20 @@ class Booking extends \yii\db\ActiveRecord
     }
 
     function nameValid(){
-        //$customer= new CardHolder();
         if (($model = CardHolder::find()->where(['Mobile' => $this->customerID,'Name'=>$this->Name,'IsActive'=>1])->asArray()->all()) == null) {  
             $this->addError('Name', 'Invalid Name');
         }else{
-            $this->cardValid=true;
-            if(sizeof($model)>1){$this->multipleCards=true;}
+            if(sizeof($model)==1){$this->completeStep1=true;}
+            //$this->cardValid=true; 
+        }
+    }
+
+    function cardtypeValid(){
+        if (($model = CardHolder::find()->where(['Mobile' => $this->customerID,'Name'=>$this->Name,'CardTypeID'=>$this->cardtype,'IsActive'=>1])->asArray()->one()) == null) {  
+            $this->addError('cardtype', 'Invalid Card');
+        }else{
+            $this->completeStep1=true;
+           // $this->cardValid=true; 
         }
     }
 
@@ -123,6 +134,7 @@ class Booking extends \yii\db\ActiveRecord
             'createdOn' => 'Created On',
             'lastUpdated' => 'Last Updated',
             'createdBy' => 'Created By',
+            
         ];
     }
 

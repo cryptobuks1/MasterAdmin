@@ -94,14 +94,23 @@ class BookingController extends Controller
       //  $customer= new CardHolder();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            
-            if($model->multipleCards){
-            
-            $model->scenario = Booking::SCENARIO_MULTICARD;
+           
+
+            if($model->completeStep1){
+                // echo "<pre>";print_r($model);
+             //   echo "hiii";
+            $model['DUMP']=CardHolder::findModelbymobile($model->customerID,$model->cardtype);
+            //echo "<pre>";print_r($model);exit;
+            return $this->render('create-booking', [
+                'model' => $model,
+            ]);
+            }
+            else if($model->multipleCards || $model->cardValid){
              return $this->render('create', [
                 'model' => $model,
             ]);
             }
+           
             //return $this->redirect(['view', 'id' => $model->bookingID]);
         }
 
