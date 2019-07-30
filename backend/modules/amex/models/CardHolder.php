@@ -37,10 +37,10 @@ class CardHolder extends \yii\db\ActiveRecord
     
     public const CardTypeName=[0,'Platinam','Centurion','Charge'];
 
-    public const CardLimit=[  'Platinam'=>['play'=>2,'learn'=>0],
+    public const CardLimit=[    'Platinam'=>['play'=>2,'learn'=>0],
                                 'Centurion'=>['play'=>999,'learn'=>999],
                                 'Charge'=>['play'=>999,'learn'=>2]
-    ];
+            ];
     public const Platinam=['play'=>2,'learn'=>0]; //play ,Lessons
     public const Centurion=['play'=>999,'learn'=>999];
     public const Charge=['play'=>999,'learn'=>2];

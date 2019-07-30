@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\amex\models\CardType;
 use backend\modules\amex\models\BookingMaster;
+use backend\modules\amex\models\FourBallMaster;
 use backend\modules\amex\models\GolfCourseMaster;
 use backend\modules\amex\models\GolfCourseMasterSearch;
 
@@ -59,6 +60,7 @@ class CardHolderController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    
     public function actionView($id)
     {
         return $this->render('view', [
@@ -77,8 +79,6 @@ class CardHolderController extends Controller
 
     public function actionGolf($id=null)
     {
-
-        
        // $model=GolfCourseMaster::find()->where(['GID'=>(int)$id])->asArray()->one();
         $model['days']=CardHolder::getDatesArr(15);
         $model['GC']=(int)$id;
@@ -91,6 +91,7 @@ class CardHolderController extends Controller
                     'PlatinamBooking'=>$GolfDetail['PlatinamBooking'],
                     'Centurion'=>$GolfDetail['CenturionBooking'],
                     'Charge'=>$GolfDetail['ChargeBooking'],
+
                     'Amex'=>[
                         'weekend'=>($isWeekend)?'YES':'NO',
                         'limit'=>(!$isWeekend)?$GolfDetail['AMEXConciergeWeekdayRounds']:$GolfDetail['AMEXConciergeWeekendRounds'],
@@ -170,6 +171,14 @@ class CardHolderController extends Controller
     public function actionCreate()
     {
         $model = new CardHolder();
+        $model->dateOfBooking="now()";
+        $model->confirmedTimeOfPlay='';
+        $model->customerID='';//Get By requested email and phone & card
+        $model->isActive=1;
+        $model->createdOn='now()';
+        $model->lastUpdated='now()';
+        $model->createdBy='';// get userid by session
+        $model->bookingStatus='';//status id
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->CardHolderID]);
@@ -222,16 +231,16 @@ class CardHolderController extends Controller
      * @return CardHolder the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelbymobile($mobile,$CardTypeID=null)
+    protected function findModelbymobile($mobile,int $CardTypeID=null)
     {
-        $CardTypeID=($CardTypeID) ? $CardTypeID :$CardTypeID;
+        //$CardTypeID=($CardTypeID) ? (int)$CardTypeID :$CardTypeID;
        
         if (($model = CardHolder::find()
             ->andFilterWhere(['Mobile' => (int)$mobile,'IsActive'=>1,'CardTypeID'=>$CardTypeID])
-            ->andFilterWhere(['in', 'CardTypeID', [1,2,3,4,5]])
+            //->andFilterWhere(['in', 'CardTypeID', [1,2,3,4,5]])
             ->asArray()->all()) !== null) {
             
-                echo sizeof($model);
+            echo sizeof($model);
 
            for($i=0;$i<sizeof($model);$i++){
             $model[$i]['CardTypeName']=CardType::find()->where(['CardTypeID'=>$model[$i]['CardTypeID'],'IsActive'=>1])->asArray()->one()['CardTypeName'];
@@ -240,6 +249,30 @@ class CardHolderController extends Controller
                 ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
                 ->orderBy(['dateOfPlay' => SORT_DESC,])
                 ->asArray()->one();
+
+
+                // $sql=FourBallMaster::find()
+                // ->joinwith('booking')
+                // ->andFilterWhere(['fourBallFullName'=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile']])
+                // ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                // ->orderBy(['dateOfPlay' => SORT_DESC,])
+                // ->createCommand()->getRawSql();
+                
+            $model[$i]['LastSuplimantryBooking']=FourBallMaster::find()
+                ->joinwith('booking')
+                ->andFilterWhere(['fourBallFullName'=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile'],'fourBallCardType'=>$model[$i]['CardTypeID']])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                ->orderBy(['dateOfPlay' => SORT_DESC,])
+                ->asArray()->one();
+                //pre($sql);exit;
+                //$model[$i]['LastSuplimantryBooking']=Yii::$app->get('amexDB')->createCommand($sql)->queryAll();
+        
+            // /$model[$i]['LastSuplimantryBooking']=FourBallMaster::find()
+            //     ->joinwith('booking')
+            //     ->andFilterWhere(['fourBallFullName '=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile'],'isActive'=>1])
+            //     //->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+            //     //->orderBy(['dateOfPlay' => SORT_DESC,])
+            //     ->asArray()->one();
 
                 $date = new \DateTime('now');
                 $todayDate=$date->format(CardHolder::SERVER_FORMAT);
@@ -254,6 +287,16 @@ class CardHolderController extends Controller
                 ->andFilterWhere(['between','dateOfPlay',$FirstDate,$lastDate])
                 ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
                 ->asArray()->one();
+            $model[$i]['MonthlyBookingCount']['Forball']=
+                Yii::$app->get('amexDB')->createCommand(
+                FourBallMaster::find()
+                ->select('count(fourBallMobile) totalbooked')
+                ->joinwith('booking')
+                ->andFilterWhere(['fourBallFullName'=>$model[$i]['Name'],'fourBallMobile'=>$model[$i]['Mobile'],'fourBallCardType'=>$model[$i]['CardTypeID'],'fourBallMaster.isActive'=>1])
+                ->andFilterWhere(['between','dateOfPlay',$FirstDate,$lastDate])
+                ->andFilterWhere(['in', 'bookingStatus', BookingMaster::ACTIVE])
+                //->asArray()->one();
+                ->createCommand()->getRawSql())->queryAll()[0]['totalbooked'];
 
                 if(( $todayDate < $model[$i]['LastPlayBooking']['dateOfPlay'])){
                     $error='Booking Alery Done, You can book next after play';

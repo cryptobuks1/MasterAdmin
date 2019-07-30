@@ -93,14 +93,23 @@ class BookingController extends Controller
         $model = new Booking();
       //  $customer= new CardHolder();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             
-            return $this->redirect(['view', 'id' => $model->bookingID]);
+            if($model->multipleCards){
+            
+            $model->scenario = Booking::SCENARIO_MULTICARD;
+             return $this->render('create', [
+                'model' => $model,
+            ]);
+            }
+            //return $this->redirect(['view', 'id' => $model->bookingID]);
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Updates an existing BookingMaster model.

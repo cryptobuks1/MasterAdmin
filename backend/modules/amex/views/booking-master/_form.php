@@ -8,29 +8,39 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+
 <div class="booking-master-form">
+
+<div class="col-lg-4">
+
+</div>
+
+<div class="col-lg-8">
+
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'GID')->textInput() ?>
 
-    <?= $form->field($model, 'dateOfPlay')->textInput() ?>
+    <!-- <input class="datepicker" data-date-format="mm/dd/yyyy"> -->
 
-    <?= $form->field($model, 'dateOfBooking')->textInput() ?>
+    <?= $form->field($model, 'dateOfPlay')->textInput(['data-date-format' => "mm/dd/yyyy",'class' => 'datepicker']) ?>
 
-    <?= $form->field($model, 'preferredTimeOfPlay')->textInput() ?>
+    <?php // $form->field($model, 'dateOfBooking')->textInput() ?>
+
+    <?= $form->field($model, 'preferredTimeOfPlay')->textInput(['placeholder' => "HH:MM"]) ?>
 
     <?= $form->field($model, 'timeOfPlay1')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'timeOfPlay2')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'confirmedTimeOfPlay')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'confirmedTimeOfPlay')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'numOfGolfers')->textInput() ?>
+<?php /*
+    <!-- <?= $form->field($model, 'customerID')->textInput() ?> -->
 
-    <?= $form->field($model, 'customerID')->textInput() ?>
-
-    <?= $form->field($model, 'bookingStatus')->textInput() ?>
+    <?= $form->field($model, 'bookingStatus')->textInput() ?> */ ?>
 
     <?= $form->field($model, 'ConfirmDateTime')->textInput() ?>
 
@@ -54,13 +64,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'masterRemarks')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'isActive')->textInput() ?>
+  <?php /*  <!-- <?= $form->field($model, 'isActive')->textInput() ?> -->
 
-    <?= $form->field($model, 'createdOn')->textInput() ?>
+    <!-- <?= $form->field($model, 'createdOn')->textInput() ?>
 
-    <?= $form->field($model, 'lastUpdated')->textInput() ?>
+    <?= $form->field($model, 'lastUpdated')->textInput() ?> -->
 
-    <?= $form->field($model, 'createdBy')->textInput() ?>
+    <!-- <?= $form->field($model, 'createdBy')->textInput() ?> --> */ ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -68,4 +78,5 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

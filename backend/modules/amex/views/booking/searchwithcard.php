@@ -12,16 +12,15 @@ use yii\widgets\Pjax;
 ?>
 <div class="new-booking">
 
-    <?php Pjax::begin();
+    <?php 
+    Pjax::begin();
     $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'customerID')->textInput() ?>
     
-    <?php if($model->cardValid){ echo $form->field($model, 'Name')->textInput(); } ?>
-
-    <?php if($model->multipleCards){ echo $form->field($model, 'cardtype')->textInput();} ?>
+    <?php if($model->multipleCards){ echo $form->field($model, 'cardtype')->textInput();  } ?>
    
-   
+  
         <div class="form-group">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
         </div>
