@@ -3,17 +3,21 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
-
+use yii\helpers\ArrayHelper;
+//use yii\jui\DatePicker;
+//use nex\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\amex\models\CardHolder */
 /* @var $form ActiveForm */
-
+$this->registerJsFile("@web/js/new.booking.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
 
 ?>
 <div class="new-booking">
 <?php Pjax::begin();
-    $form = ActiveForm::begin(); 
+    $form = ActiveForm::begin(['id' => 'booking-formstep2']); 
     $usermodel=$model;
+    $session = Yii::$app->session;
+//echo "<pre>";print_r($session);exit;
   //  echo "<pre>";print_r($model['DUMP'][0]);exit;
     ?>
     
@@ -28,12 +32,59 @@ use yii\widgets\Pjax;
 <?= $form->field($usermodel,'DUMP')->textInput(['readonly'=>true,'value' => (string)$model['DUMP'][0]['SupplementaryName']])->label('Supplementary Customer Full Name')?>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-8">
+<?php
+//isIsosAxisActive //isAmexActive 
+$GC=\backend\modules\amex\models\GolfCourseMaster::find()->select('GID')->where(['golfCourseTypeID'=>1 ,'AMEXConciergeActive'=>1])->asArray()->all();
+$GCB=\backend\modules\gcbucket\models\GolfCourseMaster::find()->select(['GID','GCName'])->andFilterWhere(['in', 'GID', $GC]) 
+    //->andFilterWhere(['isAmexActive'=>1 ,'isActive'=>1])
+    ->orderBy(['GCName'=>SORT_ASC])->asArray()->all();
+
+?>
+<div class="col-md-6">
+    <?= $form->field($model, 'GID')->DropdownList(ArrayHelper::map($GCB,'GID','GCName'),['prompt'=>'Select Golf Course'])->label('Golf Course') ?>
+</div>
+<div class="col-md-6">
+
+<?=  
+$form->field($model, 'dateOfPlay')->widget(yii\jui\DatePicker::className(), [
+    'options' => ['class' => 'form-control','placeholder' => "Select Date Of Play"],
+            'clientOptions' =>[
+                'numberOfMonths' => 1,
+                'minDate' => '+0d',
+                'maxDate'=>'+2d',
+                'changeMonth' => true,
+            ],
+            'clientEvents' => [
+                'change' => 'function () { alert(\'event "change" occured.\'); }',
+            ],
+        ]) ?>
+</div>
+</div>
+<div class="col-md-8">
+<div class="col-md-6"> <?= $form->field($model, 'preferredTimeOfPlay')->textInput(['placeholder' => "HH:MM"]) ?></div>
+</div>
+
+<div class="col-md-8">
+<div class="col-md-6"><?= $form->field($model, 'timeOfPlay1')->DropdownList(['placeholder'=>'Select Time Of Play1']) ?> </div>
+<div class="col-md-6"> <?= $form->field($model, 'timeOfPlay2')->DropdownList(['prompt'=>'Select Time Of Play2']) ?></div>
+</div>
+
+<div class="col-md-8">
+<div class="col-md-6"><?= $form->field($model, 'numOfGolfers')->DropdownList(['prompt'=>'Select Number of Golfers']) ?> </div>
+</div>
+
+<div class="col-md-8">
+<div class="col-md-6"><?= $form->field($model, 'comment')->textarea(['placeholder' => "Enter Booking Comment"]) ?> </div>
+<div class="col-md-6"> <?= $form->field($model, 'referenceNum')->textInput(['placeholder' => "Enter Booking Reference Number"]) ?></div>
+</div>
 
 </div>
-</div>
 
 </div>
+
+
+
 <?php /*
 <!-- <div class="row">
             <div class="col-lg-4 col-lg-offset-4 hidden" id="search-customer-block">
@@ -534,19 +585,30 @@ use yii\widgets\Pjax;
 
 <!-- <div class="new-booking">
 
-    <?php 
-    Pjax::begin();
-    $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'customerID')->textInput() ?>
-    
-    <?php if($model->multipleCards){ echo $form->field($model, 'cardtype')->textInput();  } ?>
-   
   
-        <div class="form-group">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-        </div>
-    <?php ActiveForm::end(); 
-    Pjax::end(); ?>
-
 </div>new-booking -->
+<script>
+
+function myajax(){
+    $.ajax({
+        url: '<?php echo \Yii::$app->getUrlManager()->createUrl("amex/booking/ajaxdump") ?>',
+        type: 'POST',
+         data: { 
+             date: $('#booking-dateofplay').val() ,
+             GID:$('#booking-gid').val()
+            
+            },
+         success: function(data) {
+             console.log(data);
+             if(data.isTAT){
+                 alert('is TAT also');
+             }
+             $('#booking-timeofplay1').html(data.timeofplay);
+             $('#booking-timeofplay2').html(data.timeofplay);
+             $('#booking-numofgolfers').html(data.numberofGolfer);
+            // alert(data);
+            //alert('hii');
+         }
+     })
+}
+</script>

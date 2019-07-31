@@ -34,6 +34,7 @@ class CardHolder extends \yii\db\ActiveRecord
     public $CardTypeName;
     public const SERVER_FORMAT='Y-m-d';
     public const DISPLAY_FORMAT='M d, Y';
+
     
     public const CardTypeName=[0,'Platinam','Centurion','Charge'];
 

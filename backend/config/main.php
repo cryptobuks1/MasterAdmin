@@ -21,6 +21,10 @@ return [
         'enbd' => [
             'class' => 'backend\modules\enbd\Module',
         ],
+        'gcbucket' => [
+            'class' => 'backend\modules\gcbucket\Module',
+
+        ],
     ],
     'components' => [
         'request' => [

@@ -44,8 +44,10 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             [['customerID'],'required'],
+            [['dateOfPlay', 'dateOfBooking', 'preferredTimeOfPlay', 'ConfirmDateTime', 'createdOn', 'lastUpdated'], 'safe'],
             [['Name'],'required', 'on' => $this->cardValid],
             [['cardtype'], 'required', 'on' => $this->multipleCards],
+            [['GID','dateOfPlay','preferredTimeOfPlay','timeOfPlay1','timeOfPlay2','numOfGolfers','comment','referenceNum'], 'required', 'on' => $this->completeStep1],
             ['Name','nameValid'],
             ['cardtype','cardtypeValid'],
             [['Name'],'string', 'max' => 30],

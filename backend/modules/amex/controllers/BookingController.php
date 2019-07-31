@@ -66,6 +66,42 @@ class BookingController extends Controller
         // ]);
     }
 
+    public function actionAjaxdump(){
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+           // echo "<pre>";print_r($data);//exit;
+            $data['isTAT']=(strtotime( $data['date']) < strtotime('+1 days'))?true:false;
+            $GolfCourseTiming=\backend\modules\amex\models\GolfCourseMaster::find()->where(['GID'=>(int)$data['GID']])->asArray()->one();
+            //$timeofplay='<option value="prompt">Select Number of Golfers</option>';
+            $timeofplay='<option value="prompt">Select Date Of Play</option>';
+            $start = new \DateTime($GolfCourseTiming['startTime']);
+            while($start->format('H:i')<$GolfCourseTiming['endTime']){
+                $_totime=$start->add(new \DateInterval('PT1H'))->format('H:i');
+                $_timeRangeVal=$start->format('H:i').'-'.$_totime;
+                $timeofplay.= ($_totime<$GolfCourseTiming['endTime'])
+                    ?'<option value="'.$_timeRangeVal.'">'.$_timeRangeVal.'</option>':'';
+               // $result[] = $start->format('H:i').'-'.$start->add(new \DateInterval('PT1H'))->format('H:i');
+            }
+           
+           // echo "<pre>";print_r($GolfCourseTiming);exit;
+            //$data['timeofplay1']=$timeofplay;
+            $data['timeofplay']=$timeofplay;
+            $data['numberofGolfer']='';
+            //$data['start-time']=
+            //CardHolder::CheckTat($data['date']);
+            //$date->format(CardHolder::SERVER_FORMAT)
+            return $this->asJson($data);
+        }
+    }
+
+    // private function create_time_range($start, $end, $interval = '60 mins', $format = '12') {
+    //     $start = new \DateTime($start);
+    //     while($start->format('H:i')<$end){
+    //         $result[] = $start->format('H:i').'-'.$start->add(new \DateInterval('PT1H'))->format('H:i');
+    //     }
+       
+    //     print_r($result);
+    // }
     
 
     public function actionCard($phone=null)
@@ -94,13 +130,13 @@ class BookingController extends Controller
       //  $customer= new CardHolder();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-           
-
-            if($model->completeStep1){
-                // echo "<pre>";print_r($model);
-             //   echo "hiii";
+            if($model->completeStep1)
+            {   
             $model['DUMP']=CardHolder::findModelbymobile($model->customerID,$model->cardtype);
-            //echo "<pre>";print_r($model);exit;
+            $session = Yii::$app->session;
+            $session->set('DUMP', $model['DUMP'][0]);
+
+           // echo "<pre>";print_r($session->get('DUMP'));exit;
             return $this->render('create-booking', [
                 'model' => $model,
             ]);
